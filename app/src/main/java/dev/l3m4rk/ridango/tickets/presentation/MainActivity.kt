@@ -1,4 +1,4 @@
-package dev.l3m4rk.ridango.tickets
+package dev.l3m4rk.ridango.tickets.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -28,6 +28,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dagger.hilt.android.AndroidEntryPoint
+import dev.l3m4rk.ridango.tickets.R
 import dev.l3m4rk.ridango.tickets.ui.theme.TicketsTheme
 
 @AndroidEntryPoint
