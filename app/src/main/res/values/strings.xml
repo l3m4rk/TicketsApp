@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Tickets</string>
+
+    <string name="button_buy_ticket">Buy ticket</string>
+    <string name="label_price">Price</string>
+    <string name="label_product_name">Product name</string>
 </resources>
