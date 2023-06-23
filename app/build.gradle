@@ -65,7 +65,17 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$dagger_hilt_version"
     kapt "com.google.dagger:hilt-compiler:$dagger_hilt_version"
 
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
+
     testImplementation 'junit:junit:4.13.2'
+
+    def truthVersion = "1.1.4"
+    testImplementation("com.google.truth:truth:$truthVersion")
+    androidTestImplementation("com.google.truth:truth:$truthVersion")
+
+    def mockkVersion = "1.13.2"
+    testImplementation "io.mockk:mockk:$mockkVersion"
+
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     androidTestImplementation platform('androidx.compose:compose-bom:2022.10.00')
