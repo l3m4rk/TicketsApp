@@ -19,7 +19,7 @@ class BuyTicketViewModel @Inject constructor(
     private val price = MutableStateFlow("")
 
     val uiState = combine(productName, price) { productName, price ->
-        BuyProductUiState(
+        BuyTicketUiState(
             productName = productName,
             price = price,
             buttonEnabled = validateTicketInput(productName, price)
@@ -27,7 +27,7 @@ class BuyTicketViewModel @Inject constructor(
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(3000),
-        initialValue = BuyProductUiState()
+        initialValue = BuyTicketUiState()
     )
 
     fun changeProductName(productNameValue: String) {

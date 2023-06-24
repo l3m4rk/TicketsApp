@@ -37,7 +37,7 @@ fun BuyTicketScreen(viewModel: BuyTicketViewModel = hiltViewModel()) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BuyTicketScreen(
-    state: BuyProductUiState,
+    state: BuyTicketUiState,
     onChangeProductName: (productNameValue: String) -> Unit = {},
     onChangePrice: (priceValue: String) -> Unit = {},
     onBuyTicket: () -> Unit = {},
