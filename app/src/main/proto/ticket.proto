@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package tickets;
+option java_package = "dev.l3m4rk.ridango.tickets";
+
+message Ticket {
+  uint32 id = 1;
+  string productName = 2;
+  uint32 price = 3; // price in cents
+}
