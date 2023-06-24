@@ -1,7 +1,7 @@
 package dev.l3m4rk.ridango.tickets.data.network
 
 import dev.l3m4rk.ridango.tickets.TicketOuterClass.Ticket
-import dev.l3m4rk.ridango.tickets.data.ApiResult
+import dev.l3m4rk.ridango.tickets.data.model.ApiResult
 import retrofit2.http.Body
 import retrofit2.http.POST
 

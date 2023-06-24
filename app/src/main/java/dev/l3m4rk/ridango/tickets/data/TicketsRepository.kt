@@ -1,6 +1,7 @@
 package dev.l3m4rk.ridango.tickets.data
 
 import dev.l3m4rk.ridango.tickets.TicketOuterClass.Ticket
+import dev.l3m4rk.ridango.tickets.data.model.ApiResult
 import dev.l3m4rk.ridango.tickets.data.network.TicketsApi
 import dev.l3m4rk.ridango.tickets.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
