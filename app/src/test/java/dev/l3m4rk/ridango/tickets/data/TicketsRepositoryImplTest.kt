@@ -25,7 +25,10 @@ class TicketsRepositoryImplTest {
         .setPrice(23)
         .build()
 
-    private val successResult = ApiResult.Success(code = 200, data = ticket)
+    private val successResult = ApiResult.Success(
+        code = 200,
+        data = ticket
+    )
 
     @Test
     fun `create ticket when api return success`() = runTest(testDispatcher) {
