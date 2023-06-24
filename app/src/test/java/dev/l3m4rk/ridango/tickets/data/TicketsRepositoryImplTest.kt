@@ -2,7 +2,7 @@ package dev.l3m4rk.ridango.tickets.data
 
 import com.google.common.truth.Truth.assertThat
 import dev.l3m4rk.ridango.tickets.TicketOuterClass.Ticket
-import dev.l3m4rk.ridango.tickets.data.model.ApiResult
+import dev.l3m4rk.ridango.tickets.data.network.model.ApiResult
 import dev.l3m4rk.ridango.tickets.data.network.TicketsApi
 import io.mockk.coEvery
 import io.mockk.coVerify

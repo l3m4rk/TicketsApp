@@ -1,4 +1,4 @@
-package dev.l3m4rk.ridango.tickets.data.model
+package dev.l3m4rk.ridango.tickets.data.network.model
 
 sealed class ApiResult<T> {
     data class Success<T>(

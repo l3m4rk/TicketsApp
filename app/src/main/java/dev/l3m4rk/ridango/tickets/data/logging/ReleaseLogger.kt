@@ -1,4 +1,4 @@
-package dev.l3m4rk.ridango.tickets.di
+package dev.l3m4rk.ridango.tickets.data.logging
 
 import android.util.Log
 import timber.log.Timber
