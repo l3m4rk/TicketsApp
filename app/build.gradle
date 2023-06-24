@@ -125,6 +125,9 @@ dependencies {
     // LeakCanary
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.11")
 
+    // Timber
+    implementation("com.jakewharton.timber:timber:5.0.1")
+
     testImplementation 'junit:junit:4.13.2'
 
     def truthVersion = "1.1.4"
