@@ -2,6 +2,7 @@ package dev.l3m4rk.ridango.tickets.data
 
 import com.google.common.truth.Truth.assertThat
 import dev.l3m4rk.ridango.tickets.TicketOuterClass.Ticket
+import dev.l3m4rk.ridango.tickets.util.core.Result
 import dev.l3m4rk.ridango.tickets.data.network.model.ApiResult
 import dev.l3m4rk.ridango.tickets.data.network.TicketsApi
 import io.mockk.coEvery
@@ -36,10 +37,9 @@ class TicketsRepositoryImplTest {
 
         val result: Result<Ticket> = repository.sendTicket(ticket)
 
-        assertThat(result.isSuccess).isTrue()
-        val data = result.getOrNull()
-        assertThat(data).isNotNull()
-        assertThat(data!!).isEqualTo(ticket)
+        assertThat(result).isInstanceOf(Result.Success::class.java)
+        val data = (result as Result.Success).data
+        assertThat(data).isEqualTo(ticket)
 
         coVerify { api.createTicket(any()) }
     }

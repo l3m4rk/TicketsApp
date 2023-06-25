@@ -38,7 +38,7 @@ fun BuyTicketScreen(viewModel: BuyTicketViewModel = hiltViewModel()) {
         buyTicketState = buyTicketState,
         onChangeProductName = viewModel::changeProductName,
         onChangePrice = viewModel::changePrice,
-        onBuyTicket = viewModel::onBuyTicket,
+        onBuyTicket = viewModel::buyTicket,
     )
 }
 
