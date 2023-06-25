@@ -4,6 +4,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import dev.l3m4rk.ridango.tickets.TicketOuterClass.Ticket
+import dev.l3m4rk.ridango.tickets.data.network.model.ApiException
 import dev.l3m4rk.ridango.tickets.domain.CreateTicketUseCase
 import dev.l3m4rk.ridango.tickets.domain.SanitizePriceInputUseCase
 import dev.l3m4rk.ridango.tickets.domain.ValidateTicketInputUseCase
@@ -26,6 +27,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.io.IOException
 
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
@@ -106,6 +108,94 @@ class BuyTicketViewModelTest {
                 (state as BuyTicketState.Success).message,
                 "Ticket id=${successTicketResponse.id} name=${successTicketResponse.productName} price=${successTicketResponse.price} created"
             )
+        }
+    }
+
+    @Test
+    fun enterInfo_createTicketNetworkError() = runTest {
+        coEvery {
+            createTicket(any(), any())
+        } returns Result.Error(IOException("No connection"))
+
+        every { sanitizePriceInput(any()) } returns 4400
+
+        viewModel.changeProductName("Ticket")
+        viewModel.changePrice("44") // input in EUR
+        viewModel.buyTicket()
+
+        verify(exactly = 1) { sanitizePriceInput("44") }
+
+        viewModel.buyTicketState.test {
+            val state = awaitItem()
+            assertThat(state).isInstanceOf(BuyTicketState.Error::class.java)
+            val err = state as BuyTicketState.Error
+            assertEquals(err.errorMessage, ErrorMessage.NetworkError)
+        }
+    }
+
+    @Test
+    fun enterInfo_createTicket_ServerError() = runTest {
+        coEvery {
+            createTicket(any(), any())
+        } returns Result.Error(ApiException(code = 500))
+
+        every { sanitizePriceInput(any()) } returns 4400
+
+        viewModel.changeProductName("Ticket")
+        viewModel.changePrice("44") // input in EUR
+        viewModel.buyTicket()
+
+        verify(exactly = 1) { sanitizePriceInput("44") }
+
+        viewModel.buyTicketState.test {
+            val state = awaitItem()
+            assertThat(state).isInstanceOf(BuyTicketState.Error::class.java)
+            val err = state as BuyTicketState.Error
+            assertEquals(err.errorMessage, ErrorMessage.ServerError)
+        }
+    }
+
+    @Test
+    fun enterInfo_createTicket_ClientError() = runTest {
+        coEvery {
+            createTicket(any(), any())
+        } returns Result.Error(ApiException(code = 400))
+
+        every { sanitizePriceInput(any()) } returns 4400
+
+        viewModel.changeProductName("Ticket")
+        viewModel.changePrice("44") // input in EUR
+        viewModel.buyTicket()
+
+        verify(exactly = 1) { sanitizePriceInput("44") }
+
+        viewModel.buyTicketState.test {
+            val state = awaitItem()
+            assertThat(state).isInstanceOf(BuyTicketState.Error::class.java)
+            val err = state as BuyTicketState.Error
+            assertEquals(err.errorMessage, ErrorMessage.ClientError)
+        }
+    }
+
+    @Test
+    fun enterInfo_createTicket_UnknownError() = runTest {
+        coEvery {
+            createTicket(any(), any())
+        } returns Result.Error(Throwable("Something went wrong"))
+
+        every { sanitizePriceInput(any()) } returns 4400
+
+        viewModel.changeProductName("Ticket")
+        viewModel.changePrice("44") // input in EUR
+        viewModel.buyTicket()
+
+        verify(exactly = 1) { sanitizePriceInput("44") }
+
+        viewModel.buyTicketState.test {
+            val state = awaitItem()
+            assertThat(state).isInstanceOf(BuyTicketState.Error::class.java)
+            val err = state as BuyTicketState.Error
+            assertEquals(err.errorMessage, ErrorMessage.UnknownError)
         }
     }
 }

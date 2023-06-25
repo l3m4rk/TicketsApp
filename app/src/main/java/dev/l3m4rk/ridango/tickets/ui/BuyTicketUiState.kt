@@ -11,5 +11,5 @@ sealed interface BuyTicketState {
     object InProgress : BuyTicketState
     data class Success(val message: String) : BuyTicketState
 
-    data class Error(val cause: String) : BuyTicketState
+    data class Error(val errorMessage: ErrorMessage) : BuyTicketState
 }

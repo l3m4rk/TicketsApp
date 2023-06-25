@@ -57,7 +57,8 @@ fun BuyTicketScreen(
     when (buyTicketState) {
         is BuyTicketState.Error -> {
             LaunchedEffect(buyTicketState) {
-                Toast.makeText(context, buyTicketState.cause, Toast.LENGTH_SHORT).show()
+                val message = buyTicketState.errorMessage.asString(context)
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
             }
         }
 

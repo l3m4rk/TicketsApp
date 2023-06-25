@@ -4,4 +4,8 @@
     <string name="button_buy_ticket">Buy ticket</string>
     <string name="label_price">Price</string>
     <string name="label_product_name">Product name</string>
+    <string name="error_network">Network error happened</string>
+    <string name="error_server">Something wrong with server</string>
+    <string name="error_client">Client error happened</string>
+    <string name="error_unknown">Something went wrong</string>
 </resources>

@@ -68,17 +68,21 @@ class BuyTicketViewModel @Inject constructor(
                     _buyTicketState.value = BuyTicketState.Success(message)
                 }
                 is Result.Error -> {
-                    val t = result.t
-                    val errorMessage = when {
-                        t is IOException -> "Network error happened"
-                        t is ApiException && t.isServer -> "Something wrong with server"
-                        t is ApiException && t.isClient -> "Client error"
-                        else -> "Something went wrong"
-                    }
-                    Timber.e(errorMessage)
+                    val errorMessage = result.t.toErrorMessage()
+                    Timber.e(errorMessage.toString())
                     _buyTicketState.value = BuyTicketState.Error(errorMessage)
                 }
             }
         }
     }
+
+    private fun Throwable.toErrorMessage(): ErrorMessage {
+        return when {
+            this is IOException -> ErrorMessage.NetworkError
+            this is ApiException && this.isServer -> ErrorMessage.ServerError
+            this is ApiException && this.isClient -> ErrorMessage.ClientError
+            else -> ErrorMessage.UnknownError
+        }
+    }
 }
+
