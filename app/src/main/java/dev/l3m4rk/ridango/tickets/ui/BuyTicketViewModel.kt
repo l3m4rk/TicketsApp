@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.l3m4rk.ridango.tickets.domain.ValidateTicketInputUseCase
+import dev.l3m4rk.ridango.tickets.util.WhenUiSubscribed
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
@@ -26,7 +26,7 @@ class BuyTicketViewModel @Inject constructor(
         )
     }.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(3000),
+        started = WhenUiSubscribed,
         initialValue = BuyTicketUiState()
     )
 
