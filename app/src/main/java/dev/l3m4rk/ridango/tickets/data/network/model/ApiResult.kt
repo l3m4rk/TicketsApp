@@ -8,7 +8,6 @@ sealed class ApiResult<T> {
 
     data class ApiFailure<T>(
         val code: Int,
-        val t: Throwable,
     ) : ApiResult<T>()
 
     data class NetworkFailure<T>(

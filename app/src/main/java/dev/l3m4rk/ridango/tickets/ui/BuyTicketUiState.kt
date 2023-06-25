@@ -5,3 +5,11 @@ data class BuyTicketUiState(
     val price: String = "",
     val buttonEnabled: Boolean = false,
 )
+
+sealed interface BuyTicketState {
+    object Init : BuyTicketState
+    object InProgress : BuyTicketState
+    data class Success(val message: String) : BuyTicketState
+
+    data class Error(val cause: String) : BuyTicketState
+}

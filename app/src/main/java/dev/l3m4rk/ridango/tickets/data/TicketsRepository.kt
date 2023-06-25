@@ -3,6 +3,7 @@ package dev.l3m4rk.ridango.tickets.data
 import dev.l3m4rk.ridango.tickets.TicketOuterClass.Ticket
 import dev.l3m4rk.ridango.tickets.data.network.model.ApiResult
 import dev.l3m4rk.ridango.tickets.data.network.TicketsApi
+import dev.l3m4rk.ridango.tickets.data.network.model.ApiException
 import dev.l3m4rk.ridango.tickets.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -25,7 +26,7 @@ class TicketsRepositoryImpl @Inject constructor(
         return withContext(ioDispatcher) {
             when (val result = ticketsApi.createTicket(ticket)) {
                 is ApiResult.Success -> Result.success(result.data)
-                is ApiResult.ApiFailure -> Result.failure(result.t)
+                is ApiResult.ApiFailure -> Result.failure(ApiException(result.code))
                 is ApiResult.NetworkFailure -> Result.failure(result.t)
                 is ApiResult.UnknownFailure -> Result.failure(result.t)
             }

@@ -7,12 +7,14 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
 import dev.l3m4rk.ridango.tickets.data.network.TicketsApi
+import dev.l3m4rk.ridango.tickets.data.network.factory.ApiResultCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.protobuf.ProtoConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 @Suppress("unused")
 @InstallIn(SingletonComponent::class)
@@ -27,14 +29,15 @@ object NetworkModule {
         }
     }
 
-    private const val BASE_URL = "/"
+    private const val BASE_URL = "http://0.0.0.0:8080/api/v1/"
 
     private const val CONNECT_TIMEOUT = 60L
     private const val READ_TIMEOUT = 60L
     private const val WRITE_TIMEOUT = 100L
 
+    @Singleton
     @Provides
-    fun provideOkHttpClient(interceptors: Set<Interceptor>): OkHttpClient {
+    fun provideOkHttpClient(interceptors: Set<@JvmSuppressWildcards Interceptor>): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
@@ -47,13 +50,13 @@ object NetworkModule {
             .build()
     }
 
+    @Singleton
     @Provides
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(ProtoConverterFactory.create())
-            // TODO: setup custom factory?
-//            .addCallAdapterFactory()
+            .addCallAdapterFactory(ApiResultCallAdapterFactory())
             .client(client)
             .build()
     }
