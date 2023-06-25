@@ -83,23 +83,9 @@ fun BuyTicketScreen(
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = state.productName,
-            onValueChange = onChangeProductName,
-            singleLine = true,
-            label = { Text(stringResource(R.string.label_product_name)) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-        )
+        ProductNameInput(state.productName, onChangeProductName)
         Spacer(Modifier.height(8.dp))
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = state.price,
-            onValueChange = onChangePrice,
-            singleLine = true,
-            label = { Text(stringResource(R.string.label_price)) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
-        )
+        PriceInput(state.price, onChangePrice)
         Spacer(Modifier.height(16.dp))
         Button(
             enabled = state.buttonEnabled,
@@ -108,6 +94,35 @@ fun BuyTicketScreen(
             Text(text = stringResource(R.string.button_buy_ticket))
         }
     }
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun PriceInput(price: String, onChangePrice: (priceValue: String) -> Unit) {
+    OutlinedTextField(
+        modifier = Modifier.fillMaxWidth(),
+        value = price,
+        onValueChange = onChangePrice,
+        singleLine = true,
+        label = { Text(stringResource(R.string.label_price)) },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
+    )
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun ProductNameInput(
+    productName: String,
+    onChangeProductName: (productNameValue: String) -> Unit,
+) {
+    OutlinedTextField(
+        modifier = Modifier.fillMaxWidth(),
+        value = productName,
+        onValueChange = onChangeProductName,
+        singleLine = true,
+        label = { Text(stringResource(R.string.label_product_name)) },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+    )
 }
 
 @Composable
