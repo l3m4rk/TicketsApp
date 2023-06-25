@@ -12,12 +12,10 @@ class CreateTicketUseCaseTest {
         val productName = "Product 1"
         val price = 350 // 3.5 EUR
 
-        val expectedPrice = 350
-
         val ticket = createTicketUseCase(productName, price)
 
         assertThat(ticket.id).isEqualTo(0)
         assertThat(ticket.productName).isEqualTo(productName)
-        assertThat(ticket.price).isEqualTo(expectedPrice)
+        assertThat(ticket.price).isEqualTo(price)
     }
 }

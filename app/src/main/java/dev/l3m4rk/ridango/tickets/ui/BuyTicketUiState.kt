@@ -1,4 +1,4 @@
-package dev.l3m4rk.ridango.tickets.presentation
+package dev.l3m4rk.ridango.tickets.ui
 
 data class BuyTicketUiState(
     val productName: String = "",
