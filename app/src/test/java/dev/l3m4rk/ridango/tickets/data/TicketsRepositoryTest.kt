@@ -17,7 +17,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import java.io.IOException
 
-class TicketsRepositoryImplTest {
+class TicketsRepositoryTest {
 
     private val api = mockk<TicketsApi>()
     private val webServer = mockk<FakeWebServer>() {
