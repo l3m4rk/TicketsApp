@@ -36,9 +36,10 @@ There are unit tests for business logic, data, and presentation layers:
 
 - [CreateTicketUseCaseTest](/app/src/test/java/dev/l3m4rk/ridango/tickets/domain/CreateTicketUseCaseTest.kt)
 - [SanitizePriceInputUseCaseTest](/app/src/test/java/dev/l3m4rk/ridango/tickets/domain/SanitizePriceInputUseCaseTest.kt)
+- [SanitizeProductNameInputUseCaseTest](/app/src/test/java/dev/l3m4rk/ridango/tickets/domain/SanitizeProductNameInputUseCaseTest.kt)
 - [ValidateTicketInputUseCaseTest](/app/src/test/java/dev/l3m4rk/ridango/tickets/domain/ValidateTicketInputUseCaseTest.kt)
 - [TicketsRepositoryTest](/app/src/test/java/dev/l3m4rk/ridango/tickets/data/TicketsRepositoryTest.kt)
-- [BuyTicketViewModelTest](/app/src/androidTest/java/dev/l3m4rk/ridango/tickets/ui/BuyTicketViewModelTest.kt)
+- [BuyTicketViewModelTest](/app/src/androidTest/java/dev/l3m4rk/ridango/tickets/ui/buyTicket/BuyTicketViewModelTest.kt)
 
 ### What could be improved
 
