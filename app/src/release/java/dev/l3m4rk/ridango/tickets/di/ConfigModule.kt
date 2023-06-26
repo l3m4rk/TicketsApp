@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dev.l3m4rk.ridango.tickets.data.logging.ReleaseLogger
 import timber.log.Timber
 import javax.inject.Singleton
 

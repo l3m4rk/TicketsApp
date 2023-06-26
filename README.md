@@ -1,4 +1,4 @@
-# TicketsApp
+# Tickets App
 
 [![Android CI](https://github.com/l3m4rk/TicketsApp/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/l3m4rk/TicketsApp/actions/workflows/main.yml)
 
