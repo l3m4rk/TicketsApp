@@ -3,6 +3,7 @@ package dev.l3m4rk.ridango.tickets.domain
 import com.google.common.truth.Truth.assertThat
 import dev.l3m4rk.ridango.tickets.TicketOuterClass.Ticket
 import dev.l3m4rk.ridango.tickets.data.TicketsRepository
+import dev.l3m4rk.ridango.tickets.util.core.Result
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -23,16 +24,15 @@ class CreateTicketUseCaseTest {
             .setProductName(productName)
             .build()
 
-        coEvery { repository.sendTicket(any()) } returns Result.success(successTicketResponse)
+        coEvery { repository.sendTicket(any()) } returns Result.Success(successTicketResponse)
 
         val result = createTicketUseCase(productName, price)
 
-        coVerify(exactly = 1) { repository.sendTicket(any()) }
-        assertThat(result.isSuccess).isTrue()
-        result.getOrNull()?.also { ticket ->
-            assertThat(ticket.id).isEqualTo(0)
-            assertThat(ticket.productName).isEqualTo(productName)
-            assertThat(ticket.price).isEqualTo(price)
-        }
+        coVerify(exactly = 1) { repository.sendTicket(withArg { it.price == price && it.productName == productName }) }
+        assertThat(result is Result.Success).isTrue()
+        val ticket = (result as Result.Success).data
+        assertThat(ticket.id).isEqualTo(0)
+        assertThat(ticket.productName).isEqualTo(productName)
+        assertThat(ticket.price).isEqualTo(price)
     }
 }

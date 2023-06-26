@@ -54,11 +54,12 @@ class BuyTicketViewModel @Inject constructor(
 
     fun buyTicket() {
         val price: Int = sanitizePriceInput(this.price.value)
+        val productName: String = this.productName.value.trim()
 
         _buyTicketState.value = BuyTicketState.InProgress
 
         viewModelScope.launch {
-            when (val result = createTicket(productName.value, price)) {
+            when (val result = createTicket(productName, price)) {
                 is Result.Success -> {
                     val ticket = result.data
                     val message =

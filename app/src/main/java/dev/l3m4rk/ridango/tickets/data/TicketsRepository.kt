@@ -1,6 +1,7 @@
 package dev.l3m4rk.ridango.tickets.data
 
 import dev.l3m4rk.ridango.tickets.TicketOuterClass.Ticket
+import dev.l3m4rk.ridango.tickets.data.network.FakeWebServer
 import dev.l3m4rk.ridango.tickets.data.network.TicketsApi
 import dev.l3m4rk.ridango.tickets.data.network.model.ApiException
 import dev.l3m4rk.ridango.tickets.data.network.model.ApiResult
@@ -20,10 +21,14 @@ interface TicketsRepository {
 @Singleton
 class TicketsRepositoryImpl @Inject constructor(
     private val ticketsApi: TicketsApi,
+    private val webServer: FakeWebServer,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : TicketsRepository {
 
     override suspend fun sendTicket(ticket: Ticket): Result<Ticket> {
+        // STOPSHIP: only for developing purposes
+        webServer.enqueueTicketResponse(ticket.productName, ticket.price)
+
         return withContext(ioDispatcher) {
             when (val result = ticketsApi.createTicket(ticket)) {
                 is ApiResult.Success -> Result.Success(result.data)

@@ -7,6 +7,6 @@ import retrofit2.http.POST
 
 interface TicketsApi {
 
-    @POST("/")
+    @POST("/tickets/create")
     suspend fun createTicket(@Body ticket: Ticket): ApiResult<Ticket>
 }

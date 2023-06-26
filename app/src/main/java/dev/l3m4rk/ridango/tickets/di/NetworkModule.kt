@@ -6,8 +6,11 @@ import dagger.Reusable
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
+import dev.l3m4rk.ridango.tickets.data.network.FakeWebServer
+import dev.l3m4rk.ridango.tickets.data.network.FakeWebServerImpl
 import dev.l3m4rk.ridango.tickets.data.network.TicketsApi
 import dev.l3m4rk.ridango.tickets.data.network.factory.ApiResultCallAdapterFactory
+import kotlinx.coroutines.CoroutineDispatcher
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -65,5 +68,11 @@ object NetworkModule {
     @Reusable
     fun provideApi(retrofit: Retrofit): TicketsApi {
         return retrofit.create(TicketsApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideWebServer(@IoDispatcher dispatcher: CoroutineDispatcher): FakeWebServer {
+        return FakeWebServerImpl(dispatcher)
     }
 }

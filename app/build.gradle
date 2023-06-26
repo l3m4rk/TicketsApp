@@ -128,6 +128,10 @@ dependencies {
         exclude group: "com.google.protobuf"
     }
 
+    // MockWebServer
+    implementation("com.squareup.okhttp3:mockwebserver:$okhttpVersion")
+    testImplementation("com.squareup.okhttp3:mockwebserver:$okhttpVersion")
+
     //Protocol Buffers
     implementation("com.google.protobuf:protobuf-javalite:3.21.9")
 
