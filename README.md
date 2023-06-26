@@ -1,5 +1,7 @@
 # TicketsApp
 
+[![Android CI](https://github.com/l3m4rk/TicketsApp/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/l3m4rk/TicketsApp/actions/workflows/main.yml)
+
 Simple app for buying tickets, communicates with server using Protocol buffers.
 
 Minimum supported OS version is Android 6.0, API level 23
@@ -19,6 +21,7 @@ Minimum supported OS version is Android 6.0, API level 23
 - [Protocol Buffers](https://developers.google.com/protocol-buffers/)
 - [MockWebServer](https://github.com/square/okhttp/tree/master/mockwebserver) 
 - Unit tests
+- [Github Actions](.github/workflows/main.yml) as CI tool for running tests on each commit 
 
 ## Implementation details
 
@@ -36,4 +39,9 @@ There are unit tests for business logic, data, and presentation layers:
 - [ValidateTicketInputUseCaseTest](/app/src/test/java/dev/l3m4rk/ridango/tickets/domain/ValidateTicketInputUseCaseTest.kt)
 - [TicketsRepositoryTest](/app/src/test/java/dev/l3m4rk/ridango/tickets/data/TicketsRepositoryTest.kt)
 - [BuyTicketViewModelTest](/app/src/androidTest/java/dev/l3m4rk/ridango/tickets/ui/BuyTicketViewModelTest.kt)
+
+### What could be improved
+
+- Project can be split into modules
+- UI tests for Compose code
 
