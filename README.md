@@ -1,6 +1,6 @@
 # Tickets App
 
-[![Android CI](https://github.com/l3m4rk/TicketsApp/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/l3m4rk/TicketsApp/actions/workflows/main.yml)
+[![Android CI](https://github.com/l3m4rk/TicketsApp/actions/workflows/main.yml/badge.svg)](https://github.com/l3m4rk/TicketsApp/actions/workflows/main.yml)
 
 Simple app for buying tickets, communicates with server using Protocol buffers.
 
@@ -44,4 +44,4 @@ There are unit tests for business logic, data, and presentation layers:
 
 - Project can be split into modules
 - UI tests for Compose code
-
+- Move all the versions/libraries setup into `buildSrc` folder
