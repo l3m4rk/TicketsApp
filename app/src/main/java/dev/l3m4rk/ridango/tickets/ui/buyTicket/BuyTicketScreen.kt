@@ -1,4 +1,4 @@
-package dev.l3m4rk.ridango.tickets.ui
+package dev.l3m4rk.ridango.tickets.ui.buyTicket
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box

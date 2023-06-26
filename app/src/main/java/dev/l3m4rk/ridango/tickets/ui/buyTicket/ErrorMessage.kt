@@ -1,4 +1,4 @@
-package dev.l3m4rk.ridango.tickets.ui
+package dev.l3m4rk.ridango.tickets.ui.buyTicket
 
 import android.content.Context
 import dev.l3m4rk.ridango.tickets.R

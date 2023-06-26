@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dev.l3m4rk.ridango.tickets.ui.TicketsAppDestinations.BuyTicket
+import dev.l3m4rk.ridango.tickets.ui.buyTicket.BuyTicketScreen
 
 @Composable
 fun TicketsApp(modifier: Modifier = Modifier) {

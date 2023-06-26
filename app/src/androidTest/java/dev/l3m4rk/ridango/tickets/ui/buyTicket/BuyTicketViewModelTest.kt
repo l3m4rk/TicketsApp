@@ -1,9 +1,9 @@
-package dev.l3m4rk.ridango.tickets.ui
+package dev.l3m4rk.ridango.tickets.ui.buyTicket
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
-import com.google.common.truth.Truth.assertThat
-import dev.l3m4rk.ridango.tickets.TicketOuterClass.Ticket
+import com.google.common.truth.Truth
+import dev.l3m4rk.ridango.tickets.TicketOuterClass
 import dev.l3m4rk.ridango.tickets.data.network.model.ApiException
 import dev.l3m4rk.ridango.tickets.domain.CreateTicketUseCase
 import dev.l3m4rk.ridango.tickets.domain.SanitizePriceInputUseCase
@@ -21,9 +21,7 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -40,7 +38,7 @@ class BuyTicketViewModelTest {
     private val testScheduler = TestCoroutineScheduler()
 
     private val priceInCents = 2300
-    private val successTicketResponse = Ticket.newBuilder()
+    private val successTicketResponse = TicketOuterClass.Ticket.newBuilder()
         .setId(1)
         .setProductName("Ticket")
         .setPrice(priceInCents)
@@ -67,22 +65,22 @@ class BuyTicketViewModelTest {
     fun initialState_inputFieldsAreEmptyAndButtonDisabled() {
         val uiState = viewModel.uiState.value
 
-        assertThat(uiState.buttonEnabled).isFalse()
-        assertThat(uiState.productName).isEmpty()
-        assertThat(uiState.price).isEmpty()
+        Truth.assertThat(uiState.buttonEnabled).isFalse()
+        Truth.assertThat(uiState.productName).isEmpty()
+        Truth.assertThat(uiState.price).isEmpty()
 
-        assertThat(viewModel.buyTicketState.value).isEqualTo(BuyTicketState.Init)
+        Truth.assertThat(viewModel.buyTicketState.value).isEqualTo(BuyTicketState.Init)
     }
 
     @Test
     fun productInfoFilled_buttonEnabled() = runTest {
-        assertFalse(viewModel.uiState.value.buttonEnabled)
+        Assert.assertFalse(viewModel.uiState.value.buttonEnabled)
 
         viewModel.changeProductName("Ticket")
         viewModel.changePrice("32") // input in EUR
 
         viewModel.uiState.test {
-            assertTrue(awaitItem().buttonEnabled)
+            Assert.assertTrue(awaitItem().buttonEnabled)
         }
     }
 
@@ -103,8 +101,8 @@ class BuyTicketViewModelTest {
 
         viewModel.buyTicketState.test {
             val state = awaitItem()
-            assertThat(state).isInstanceOf(BuyTicketState.Success::class.java)
-            assertEquals(
+            Truth.assertThat(state).isInstanceOf(BuyTicketState.Success::class.java)
+            Assert.assertEquals(
                 (state as BuyTicketState.Success).message,
                 "Ticket id=${successTicketResponse.id} name=${successTicketResponse.productName} price=${successTicketResponse.price} created"
             )
@@ -127,9 +125,9 @@ class BuyTicketViewModelTest {
 
         viewModel.buyTicketState.test {
             val state = awaitItem()
-            assertThat(state).isInstanceOf(BuyTicketState.Error::class.java)
+            Truth.assertThat(state).isInstanceOf(BuyTicketState.Error::class.java)
             val err = state as BuyTicketState.Error
-            assertEquals(err.errorMessage, ErrorMessage.NetworkError)
+            Assert.assertEquals(err.errorMessage, ErrorMessage.NetworkError)
         }
     }
 
@@ -149,9 +147,9 @@ class BuyTicketViewModelTest {
 
         viewModel.buyTicketState.test {
             val state = awaitItem()
-            assertThat(state).isInstanceOf(BuyTicketState.Error::class.java)
+            Truth.assertThat(state).isInstanceOf(BuyTicketState.Error::class.java)
             val err = state as BuyTicketState.Error
-            assertEquals(err.errorMessage, ErrorMessage.ServerError)
+            Assert.assertEquals(err.errorMessage, ErrorMessage.ServerError)
         }
     }
 
@@ -171,9 +169,9 @@ class BuyTicketViewModelTest {
 
         viewModel.buyTicketState.test {
             val state = awaitItem()
-            assertThat(state).isInstanceOf(BuyTicketState.Error::class.java)
+            Truth.assertThat(state).isInstanceOf(BuyTicketState.Error::class.java)
             val err = state as BuyTicketState.Error
-            assertEquals(err.errorMessage, ErrorMessage.ClientError)
+            Assert.assertEquals(err.errorMessage, ErrorMessage.ClientError)
         }
     }
 
@@ -193,9 +191,9 @@ class BuyTicketViewModelTest {
 
         viewModel.buyTicketState.test {
             val state = awaitItem()
-            assertThat(state).isInstanceOf(BuyTicketState.Error::class.java)
+            Truth.assertThat(state).isInstanceOf(BuyTicketState.Error::class.java)
             val err = state as BuyTicketState.Error
-            assertEquals(err.errorMessage, ErrorMessage.UnknownError)
+            Assert.assertEquals(err.errorMessage, ErrorMessage.UnknownError)
         }
     }
 }
