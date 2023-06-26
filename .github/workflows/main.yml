@@ -50,8 +50,8 @@ jobs:
         if: steps.avd-cache.outputs.cache-hit != 'true'
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: $${{ matrix.api-level }}
-          target: $${{ matrix.target }}
+          api-level: ${{ matrix.api-level }}
+          target: ${{ matrix.target }}
           arch: x86_64
           profile: Nexus 6
           force-avd-creation: false
@@ -69,8 +69,8 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         continue-on-error: true # We will skip failed devices
         with:
-          api-level: $${{ matrix.api-level }}
-          target: $${{ matrix.target }}
+          api-level: ${{ matrix.api-level }}
+          target: ${{ matrix.target }}
           arch: x86_64
           profile: Nexus 6
           force-avd-creation: false
