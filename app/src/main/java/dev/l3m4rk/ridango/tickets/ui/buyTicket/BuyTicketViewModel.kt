@@ -6,6 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.l3m4rk.ridango.tickets.data.network.model.ApiException
 import dev.l3m4rk.ridango.tickets.domain.CreateTicketUseCase
 import dev.l3m4rk.ridango.tickets.domain.SanitizePriceInputUseCase
+import dev.l3m4rk.ridango.tickets.domain.SanitizeProductNameInputUseCase
 import dev.l3m4rk.ridango.tickets.domain.ValidateTicketInputUseCase
 import dev.l3m4rk.ridango.tickets.util.WhenUiSubscribed
 import dev.l3m4rk.ridango.tickets.util.core.Result
@@ -22,6 +23,7 @@ import javax.inject.Inject
 class BuyTicketViewModel @Inject constructor(
     private val validateTicketInput: ValidateTicketInputUseCase,
     private val sanitizePriceInput: SanitizePriceInputUseCase,
+    private val sanitizeProductNameInput: SanitizeProductNameInputUseCase,
     private val createTicket: CreateTicketUseCase,
 ) : ViewModel() {
 
@@ -54,7 +56,7 @@ class BuyTicketViewModel @Inject constructor(
 
     fun buyTicket() {
         val price: Int = sanitizePriceInput(this.price.value)
-        val productName: String = this.productName.value.trim()
+        val productName: String = sanitizeProductNameInput(this.productName.value)
 
         _buyTicketState.value = BuyTicketState.InProgress
 

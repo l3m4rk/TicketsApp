@@ -10,6 +10,8 @@ import dev.l3m4rk.ridango.tickets.domain.CreateTicketUseCase
 import dev.l3m4rk.ridango.tickets.domain.CreateTicketUseCaseImpl
 import dev.l3m4rk.ridango.tickets.domain.SanitizePriceInputUseCase
 import dev.l3m4rk.ridango.tickets.domain.SanitizePriceInputUseCaseImpl
+import dev.l3m4rk.ridango.tickets.domain.SanitizeProductNameInputUseCase
+import dev.l3m4rk.ridango.tickets.domain.SanitizeProductNameInputUseCaseImpl
 
 @Suppress("unused")
 @InstallIn(SingletonComponent::class)
@@ -21,6 +23,9 @@ interface BuyTicketModule {
 
     @Binds
     fun bindSanitizePriceInput(impl: SanitizePriceInputUseCaseImpl): SanitizePriceInputUseCase
+
+    @Binds
+    fun bindSanitizeProductNameInput(impl: SanitizeProductNameInputUseCaseImpl): SanitizeProductNameInputUseCase
 
     @Binds
     fun bindCreateTicket(impl: CreateTicketUseCaseImpl): CreateTicketUseCase

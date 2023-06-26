@@ -7,6 +7,7 @@ import dev.l3m4rk.ridango.tickets.TicketOuterClass
 import dev.l3m4rk.ridango.tickets.data.network.model.ApiException
 import dev.l3m4rk.ridango.tickets.domain.CreateTicketUseCase
 import dev.l3m4rk.ridango.tickets.domain.SanitizePriceInputUseCase
+import dev.l3m4rk.ridango.tickets.domain.SanitizeProductNameInputUseCase
 import dev.l3m4rk.ridango.tickets.domain.ValidateTicketInputUseCase
 import dev.l3m4rk.ridango.tickets.util.core.Result
 import io.mockk.coEvery
@@ -33,6 +34,7 @@ class BuyTicketViewModelTest {
 
     private val validateTicketInput = ValidateTicketInputUseCase()
     private val sanitizePriceInput = mockk<SanitizePriceInputUseCase>()
+    private val sanitizeProductNameInput = mockk<SanitizeProductNameInputUseCase>()
     private val createTicket = mockk<CreateTicketUseCase>()
 
     private val testScheduler = TestCoroutineScheduler()
@@ -52,6 +54,7 @@ class BuyTicketViewModelTest {
         viewModel = BuyTicketViewModel(
             validateTicketInput = validateTicketInput,
             sanitizePriceInput = sanitizePriceInput,
+            sanitizeProductNameInput = sanitizeProductNameInput,
             createTicket = createTicket,
         )
     }
@@ -92,12 +95,14 @@ class BuyTicketViewModelTest {
         } returns Result.Success(successTicketResponse)
 
         every { sanitizePriceInput(any()) } returns priceInCents
+        every { sanitizeProductNameInput(any()) } returns "Ticket"
 
         viewModel.changeProductName("Ticket")
         viewModel.changePrice("23") // input in EUR
         viewModel.buyTicket()
 
         verify(exactly = 1) { sanitizePriceInput("23") }
+        verify(exactly = 1) { sanitizeProductNameInput("Ticket") }
 
         viewModel.buyTicketState.test {
             val state = awaitItem()
@@ -110,18 +115,20 @@ class BuyTicketViewModelTest {
     }
 
     @Test
-    fun enterInfo_createTicketNetworkError() = runTest {
+    fun enterInfo_createTicket_NetworkError() = runTest {
         coEvery {
             createTicket(any(), any())
         } returns Result.Error(IOException("No connection"))
 
         every { sanitizePriceInput(any()) } returns 4400
+        every { sanitizeProductNameInput(any()) } returns "Ticket"
 
         viewModel.changeProductName("Ticket")
         viewModel.changePrice("44") // input in EUR
         viewModel.buyTicket()
 
         verify(exactly = 1) { sanitizePriceInput("44") }
+        verify(exactly = 1) { sanitizeProductNameInput("Ticket") }
 
         viewModel.buyTicketState.test {
             val state = awaitItem()
@@ -138,12 +145,14 @@ class BuyTicketViewModelTest {
         } returns Result.Error(ApiException(code = 500))
 
         every { sanitizePriceInput(any()) } returns 4400
+        every { sanitizeProductNameInput(any()) } returns "Ticket"
 
         viewModel.changeProductName("Ticket")
         viewModel.changePrice("44") // input in EUR
         viewModel.buyTicket()
 
         verify(exactly = 1) { sanitizePriceInput("44") }
+        verify(exactly = 1) { sanitizeProductNameInput("Ticket") }
 
         viewModel.buyTicketState.test {
             val state = awaitItem()
@@ -160,12 +169,14 @@ class BuyTicketViewModelTest {
         } returns Result.Error(ApiException(code = 400))
 
         every { sanitizePriceInput(any()) } returns 4400
+        every { sanitizeProductNameInput(any()) } returns "Ticket"
 
         viewModel.changeProductName("Ticket")
         viewModel.changePrice("44") // input in EUR
         viewModel.buyTicket()
 
         verify(exactly = 1) { sanitizePriceInput("44") }
+        verify(exactly = 1) { sanitizeProductNameInput("Ticket") }
 
         viewModel.buyTicketState.test {
             val state = awaitItem()
@@ -182,12 +193,14 @@ class BuyTicketViewModelTest {
         } returns Result.Error(Throwable("Something went wrong"))
 
         every { sanitizePriceInput(any()) } returns 4400
+        every { sanitizeProductNameInput(any()) } returns "Ticket"
 
         viewModel.changeProductName("Ticket")
         viewModel.changePrice("44") // input in EUR
         viewModel.buyTicket()
 
         verify(exactly = 1) { sanitizePriceInput("44") }
+        verify(exactly = 1) { sanitizeProductNameInput("Ticket") }
 
         viewModel.buyTicketState.test {
             val state = awaitItem()
