@@ -5,4 +5,5 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.7.20' apply false
     id 'com.google.dagger.hilt.android' version '2.44' apply false
     id "com.google.protobuf" version "0.9.3" apply false
+    id 'org.jetbrains.kotlinx.kover' version '0.7.1' apply false
 }
